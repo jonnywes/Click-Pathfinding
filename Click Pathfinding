@@ -1,0 +1,148 @@
+import pygame
+import time
+import random
+
+pygame.init()
+
+BLACK = (  0,   0,   0)
+WHITE = (255, 255, 255)
+BLUE =  (  0,   0, 255)
+GREEN = (  0, 255,   0)
+RED =   (255,   0,   0)
+WIDTH = 1200
+HEIGHT = 800
+
+
+win = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('AI PATHFINDING')
+bg = pygame.Color.g
+clock = pygame.time.Clock()
+speed = 5
+
+
+class bot():
+    walk = pygame.draw.rect
+    def __init__(self, x, y, width, height, end):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.end = end
+        self.path = [self.x, self.end]
+        self.walkCount = 0
+        self.vel = speed
+
+    #def draw(self, win, goal):
+        #pygame.draw.rect(win, (WHITE), (goal.x, goal.y, goal.width, goal.height))
+        #self.move(goal)
+
+
+
+    def move(self, end, speed):
+        #left and right movement
+        if self.x != end.x:
+            #moves right if goal x is left
+            if self.x > end.x and self.x - goal.x > speed:
+                self.vel = speed
+                self.x -= self.vel
+            #slows speed when approaching so that pixels can match up
+            elif self. x > end.x and self.x - goal.x <= speed:
+                self.vel = 1
+                self.x -= self.vel
+                
+            #moves left if goal x is right
+            elif self.x < end.x and goal.x - self.x > speed:
+                self.vel = speed
+                self.x += self.vel
+            #slows speed when approaching so that pixels can match up
+            elif self.x < end.x and goal.x - self.x <= speed:
+                self.vel = 1
+                self.x += self.vel
+
+        #up and down movement
+ 
+        if self.y != end.y:
+            #moves up if goal x is up
+            if self.y > end.y and self.y - goal.y > speed:
+                self.vel = speed
+                self.y -= self.vel
+                
+            #slows speed when approaching so that pixels can match up
+            elif self.y > end.y and self.y - goal.y <= speed:
+                self.vel = 1
+                self.y -= self.vel
+                
+            #moves down if goal y is down
+            elif self.y < end.y and goal.y - self.y > speed:
+                self.vel = speed
+                self.y += self.vel
+
+            #slows speed when approaching so that pixels can match up
+            elif self.y < end.y and goal.y - self.y <= speed:
+                self.vel = 1
+                self.y += self.vel
+             
+
+        elif self.x == goal.x and self.y == goal.y:
+            print("You made it!")
+            self.vel = 0
+            
+            
+            '''
+        else:
+            if self.x - self.vel > self.path[0]:
+                self.x += self.vel
+            else:
+                self.vel = self.vel + -1
+                self.walkCount = 0
+             '''           
+
+class trophy():
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+def redrawGameWindow():
+    win.fill(GREEN)
+    
+    pygame.draw.rect(win, (100, 150, 250), (goal.x, goal.y, goal.width, goal.height))
+    pygame.draw.rect(win, (BLUE), (Alfred.x, Alfred.y, Alfred.width, Alfred.height))
+
+    pygame.display.update()
+    
+#mainloop
+goal = trophy(200, 500, 64, 64)
+end = goal.x, goal.y
+Alfred = bot(600, 400, 64, 64, end)
+run = True
+a = 600
+b = 200
+coords_give = False
+
+
+while run:
+        
+    pressed = pygame.key.get_pressed()
+    clock.tick(27)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+    if pressed[pygame.K_SPACE] and coords_give == False:
+        coords_give = True
+    elif pressed[pygame.K_SPACE] and coords_give == True:
+        coords_give = False
+
+
+    redrawGameWindow()
+    Alfred.move(goal, speed)
+
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      goal.x, goal.y = pygame.mouse.get_pos()
+
+    
+
+
+print("GAME OVER")
+                
